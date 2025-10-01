@@ -6,12 +6,14 @@ import lutfia.example.donation.management.system.dto.UserRequest;
 import lutfia.example.donation.management.system.model.Users;
 import lutfia.example.donation.management.system.repository.UserRepo;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 @AllArgsConstructor
 public class UserService {
+    private final PasswordEncoder passwordEncoder;
     private  final UserRepo userRepo;
     private final ModelMapper modelMapper;
 
@@ -19,8 +21,8 @@ public class UserService {
         Users user = modelMapper.map(request, Users.class);
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRoles(request.getRoles());
         return userRepo.save(user);
     }
 }

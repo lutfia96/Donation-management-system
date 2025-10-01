@@ -41,7 +41,7 @@ public class Role extends BaseModel {
             name = "role_authorities",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    @JsonIgnoreProperties({"menuItems", "roles"})
+    //@JsonIgnoreProperties({"menuItems", "roles"})
     @IsTrackable
     private Set<Authority> authorities = new HashSet<>();
 
