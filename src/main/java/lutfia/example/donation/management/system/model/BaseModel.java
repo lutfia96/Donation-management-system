@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Setter
@@ -34,12 +35,14 @@ public abstract class BaseModel implements Serializable {
     @JsonIgnore
     @Basic(optional = false)
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+//    private LocalDateTime createdAt = LocalDateTime.now();
+    private OffsetDateTime createdAt;
+
 
     @CreatedBy
     @JsonIgnore
     @Basic(optional = false)
-    @Column(name = "created_by")
+    @Column(name = "created_by",nullable = true)
     private String createdBy;
 
     @LastModifiedDate
@@ -49,10 +52,10 @@ public abstract class BaseModel implements Serializable {
 
     @LastModifiedBy
     @JsonIgnore
-    @Column(name = "updated_by")
+    @Column(name = "updated_by",nullable = true)
     private String updatedBy;
 
-    @Transient private String removedBy;
+  //  @Transient private String removedBy;
 
     public <T> T toDao(T dao) {
         if (dao == null) return null;

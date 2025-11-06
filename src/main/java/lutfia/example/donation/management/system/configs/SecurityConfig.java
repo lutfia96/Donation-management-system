@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -21,6 +22,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @AllArgsConstructor
 public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
+    private final JwtFilter jwtFilter;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -32,7 +34,7 @@ public class SecurityConfig {
                         .csrf(c-> c.disable())
                         .sessionManagement(s->s.sessionCreationPolicy(STATELESS))
                         .authorizeHttpRequests(request->request
-                                .requestMatchers("/api/v1/user",
+                                .requestMatchers("/api/v1/user/**",
                                         "/swagger-resources",
                                         "/swagger-resources/**",
                                         "/swagger-ui/**",
@@ -42,11 +44,11 @@ public class SecurityConfig {
                                         "/v3/api-docs/**"
                                         )
                                         .permitAll()
-                                        .requestMatchers("/api/v1/login")
-                                        .permitAll()
                                         .anyRequest()
-                                        .authenticated()
-                                );
+                                        .permitAll()
+                                        //.authenticated()
+                                )
+        .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
                 return http.build();
     }
     @Bean

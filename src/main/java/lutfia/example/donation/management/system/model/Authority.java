@@ -31,9 +31,9 @@ public class Authority extends BaseModel {
     @Column(name = "action")
     private String action;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "authorities")
-    private Set<Role> roles = new HashSet<>();
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "authorities")
+//    private Set<Role> roles = new HashSet<>();
 
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "authorities")

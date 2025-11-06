@@ -1,11 +1,11 @@
 package lutfia.example.donation.management.system.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -18,5 +18,10 @@ public class Donation {
     private String purpose;
     private Double amount ;
 
-
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonBackReference
+    private Donors donor;
 }

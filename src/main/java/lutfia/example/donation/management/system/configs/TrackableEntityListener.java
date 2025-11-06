@@ -1,12 +1,8 @@
 package lutfia.example.donation.management.system.configs;
 
-import jakarta.persistence.PostPersist;
-import jakarta.persistence.PostRemove;
-import jakarta.persistence.PostUpdate;
 import jakarta.persistence.PreRemove;
 import lombok.extern.slf4j.Slf4j;
 import lutfia.example.donation.management.system.model.BaseModel;
-import org.hibernate.action.internal.EntityAction;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -30,19 +26,19 @@ public class TrackableEntityListener {
 //        track(entity, EntityAction.DELETE);
 //    }
 
-    @PreRemove
-    public void preRemove(Object entity) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            try {
-                Field removedByField = BaseModel.class.getDeclaredField("removedBy");
-                removedByField.setAccessible(true);
-                removedByField.set(entity, auth.getName());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    @PreRemove
+//    public void preRemove(Object entity) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth != null) {
+//            try {
+//                Field removedByField = BaseModel.class.getDeclaredField("removedBy");
+//                removedByField.setAccessible(true);
+//                removedByField.set(entity, auth.getName());
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
 //    @Async("taskExecutor")
 //    @Transactional
